@@ -1,0 +1,12 @@
+---
+title: "About this website"
+author: "Carolyn Martinez"
+date: "2024-10-28"
+output: html_document
+---
+
+## info about the site.
+
+This is a sample site. from class [P8105](https://p8105.com). Github will be used to host.
+
+

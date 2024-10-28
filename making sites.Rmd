@@ -1,0 +1,65 @@
+---
+title: "index"
+author: "Carolyn Martinez"
+date: "2024-10-28"
+output: html_document
+---
+
+Repo Name MUST be:
+[githubusername.github.io]
+
+Name the rmd "index.Rmd"
+
+## Common Content 
+
+This is a great site about data science and elmo.
+
+Embedding a website:
+
+Sometimes I use [google](https://www.google.com/) to do data analysis. 
+
+Linking images from your computer: must be in the same repo!!
+
+![](images/the path to the photo)
+
+When you knit the image shows up.
+
+
+Markdown format for embedding: 
+
+this is HTML code: 
+<img src="images/image.jpg" style="width:75%">
+
+
+If you would like to know more, visit [this site](about.html)
+
+## _site.yml
+
+This is case sensitive!
+THIS ALSO CHANGES GLOBAL SETTINGS FOR ALL THE DOCUMENTS WITHIN IT 
+
+
+name: "Yay internet!"
+output_dir: "."
+navbar: #navigation bar
+  title: "Home"
+  right:
+    - text: "About" #this is the text in the navigation bar
+      href: about.html # link to the site
+    - icon: fa-envelope fa-lg
+      href: mailto:<you@youremail.com>
+    - text: "Plots"
+    - href: #link to plots
+    - icon: fa-github fa-lg
+      href: http://github.com/<YOUR_GH_NAME>/
+output:
+  htmtestl_document:
+    theme: cerulean #this is the theme of ALL the sites
+
+  
+  
+     
+      
+      
+      
+      

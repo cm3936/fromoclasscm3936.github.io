@@ -1,0 +1,28 @@
+---
+title: "My awesome website"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+---
+
+# This is Jeff's awesome website
+
+![](https://media.giphy.com/media/drXGoW1iudhKw/giphy.gif)
+
+## Here are some plots that can be made
+
+```{r}
+library(tidyverse)
+
+df= tibble(
+   x=rnorm(100, 2, 5),
+   y= 1 + 2*x - 0.5*x^2 +rnorm(100)
+)
+ggplot(df,aes(x=x, y=y))+
+   geom_point()
+```
+
+
+
+
