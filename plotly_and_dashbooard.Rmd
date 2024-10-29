@@ -1,0 +1,141 @@
+---
+title: "plotly"
+output: 
+  html_document:
+     toc: true
+     toc_flat: true
+editor_options: 
+  chunk_output_type: console
+---
+## Today we are making interactive plots with plotly
+
+Mkaing examples using the NYC airbnb dataset.
+
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+```
+
+```{r}
+library(tidyverse)
+library(p8105.datasets)
+library(plotly)
+```
+
+
+Doing some data cleaning: 
+
+```{r}
+
+data(nyc_airbnb)
+
+nyc_airbnb = 
+  nyc_airbnb |> 
+  mutate(rating = review_scores_location / 2) |> #five start scale
+  select(
+    neighbourhood_group, neighbourhood, rating, price, room_type, lat, long) |>
+  filter(
+    !is.na(rating), 
+    neighbourhood_group == "Manhattan",
+    room_type == "Entire home/apt",
+    price %in% 100:500) #the in is between 
+```
+
+## Plotly Scatterplot 
+
+```{r}
+nyc_airbnb |>
+  mutate(text_label = str_c("Price: $", price, "\nRating: ", rating, "\nNeighborhood: ", neighbourhood)) |> #this is the tooltip text that appears when you hover
+  plot_ly(
+    x = ~lat, y = ~long, 
+    type = "scatter", 
+    mode = "markers",
+    color = ~price, 
+    text = ~text_label, alpha = 0.5) #aesthetic markings of the plot
+```
+
+##Plotly Boxplot
+
+```{r}
+nyc_airbnb |> 
+  mutate(neighbourhood = fct_reorder(neighbourhood, price)) |> #reordering the variable by the price
+  plot_ly(y = ~price, color = ~neighbourhood, type = "box", colors = "viridis")
+```
+
+
+## Plotly Barchart 
+```{r }
+
+nyc_airbnb |> 
+  count(neighbourhood) |> 
+  mutate(neighbourhood = fct_reorder(neighbourhood, n)) |> 
+  plot_ly(x = ~neighbourhood, y = ~n, color = ~neighbourhood, type = "bar", colors = "viridis")
+```
+
+This lists the neighborhoods on the side and allows for more interaction. Double click to get the specific neighborhood. 
+
+Now we do a bar plot 
+```{r}
+
+nyc_airbnb|>
+   count(neighbourhood)|>
+   mutate(neighbourhood=fct_reorder(neighbourhood, n))|>
+   plot_ly(
+      x= ~neighbourhood, y= ~n,
+      type = "bar"
+   )
+```
+
+## ggplotly
+```{r}
+scatter_ggplot = 
+  nyc_airbnb |>
+  ggplot(aes(x = lat, y = long, color = price)) +
+  geom_point(alpha = 0.25) +
+  coord_cartesian()
+
+ggplotly(scatter_ggplot)
+```
+
+
+```{r}
+box_ggplot = 
+  nyc_airbnb |> 
+  mutate(neighbourhood = fct_reorder(neighbourhood, price)) |> 
+  ggplot(aes(x = neighbourhood, y = price, fill = neighbourhood)) +
+  geom_boxplot() +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+
+ggplotly(box_ggplot)
+```
+
+
+
+## flexdashboard 
+
+change the name and ouotput of the rmd. 
+
+
+## flexdashboard on website 
+
+using this command to knit in the dash
+
+rmarkdown::render("dashboard_template.Rmd", output_format = "flexdashboard::flex_dashboard")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
